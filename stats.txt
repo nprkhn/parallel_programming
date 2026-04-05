@@ -1,0 +1,19 @@
+Size: 200
+Execution time: 0.0625001 s
+Task volume: 15.960.000
+
+Size: 400
+Execution time: 0.559836 s
+Task volume: 127.840.000
+
+Size: 600
+Execution time: 2.20002 s
+Task volume: 431.640.000
+
+Size: 800
+Execution time: 5.32898 s
+Task volume: 1.023.360.000
+
+Size: 1000
+Execution time: 10.6366 s
+Task volume: 1.999.000.000
