@@ -1,6 +1,8 @@
 import subprocess
 import sys
 
+cores = 8
+
 generate_matr = subprocess.run(
             [sys.executable, "generate_matr.py"],
             capture_output=True,
@@ -8,7 +10,7 @@ generate_matr = subprocess.run(
 )
 
 multiple_matr = subprocess.run(
-            ["mul_matrix.exe"],
+            ["mpiexec", "-n", str(cores), "mul_matrix.exe"],
             capture_output=True,
             text=True
 )
