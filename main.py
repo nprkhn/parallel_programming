@@ -1,6 +1,8 @@
 import subprocess
 import sys
 
+threads = 8
+
 generate_matr = subprocess.run(
             [sys.executable, "generate_matr.py"],
             capture_output=True,
@@ -8,7 +10,7 @@ generate_matr = subprocess.run(
 )
 
 multiple_matr = subprocess.run(
-            ["mul_matrix.exe"],
+            ["mul_matrix.exe", str(threads)],
             capture_output=True,
             text=True
 )

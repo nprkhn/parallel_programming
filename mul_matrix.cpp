@@ -4,6 +4,7 @@
 #include <chrono>
 #include <string>
 #include <sstream>
+#include <omp.h>
 
 using namespace std;
 
@@ -41,15 +42,26 @@ void writeMatrix(const string& filename, const vector<vector<int>>& matrix, int 
     file.close();
 }
 
-vector<vector<int>> multiplyMatrices(const vector<vector<int>>& A, const vector<vector<int>>& B, int n, long long& taskVolume) {
+vector<vector<int>> multiplyMatrices(const vector<vector<int>>& A, const vector<vector<int>>& B, int n, long long& taskVolume, int num_threads) {
     vector<vector<int>> C(n, vector<int>(n, 0));
     taskVolume = 0;
+
+    omp_set_num_threads(num_threads);
+
+    int actual_threads = 1;
+    #pragma omp parallel
+    {
+        #pragma omp single
+        actual_threads = omp_get_num_threads();
+    }
+    std::cout << "Num threads: " << actual_threads << std::endl;
+
+    #pragma omp parallel for
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             int sum = 0;
             for (int k = 0; k < n; ++k) {
                 sum += A[i][k] * B[k][j];
-                taskVolume++;
             }
             C[i][j] = sum;
         }
@@ -59,7 +71,11 @@ vector<vector<int>> multiplyMatrices(const vector<vector<int>>& A, const vector<
     return C;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    int num_threads = 1;
+
+    if (argc > 1) num_threads = stoi(argv[1]);
+
     int n;
     vector<vector<int>> A = readMatrix("matrix_a.txt", n);
 
@@ -71,8 +87,9 @@ int main() {
     }
 
     long long taskVolume = 0;
+
     auto start = chrono::high_resolution_clock::now();
-    vector<vector<int>> C = multiplyMatrices(A, B, n, taskVolume);
+    vector<vector<int>> C = multiplyMatrices(A, B, n, taskVolume, num_threads);
     auto end = chrono::high_resolution_clock::now();
 
     double duration = chrono::duration<double>(end - start).count();
