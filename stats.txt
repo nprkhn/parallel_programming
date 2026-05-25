@@ -1,19 +1,6 @@
-Size: 200
-Execution time: 0.0625001 s
-Task volume: 15.960.000
-
-Size: 400
-Execution time: 0.559836 s
-Task volume: 127.840.000
-
-Size: 600
-Execution time: 2.20002 s
-Task volume: 431.640.000
-
-Size: 800
-Execution time: 5.32898 s
-Task volume: 1.023.360.000
-
-Size: 1000
-Execution time: 10.6366 s
-Task volume: 1.999.000.000
+Размер матрицы	Блок: 8x8	Блок:16x16	Блок:32x32
+200		0.0012 s	0.0011 s	0.0013 s
+400		0.0048 s	0.0039 s	0.0042 s
+800		0.038 s		0.028 s		0.031 s
+1600		0.52 s		0.41 s		0.45 s
+2000		1.01 s		0.79 s		0.88 s
